@@ -5,9 +5,64 @@ if($_SESSION['us_tipo']==1){
 ?>
 
   <title>Datos personales</title>
+
 <?php
     include_once 'layouts/nav.php';
 ?>
+    <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="cambiocontra" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar password</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+            <img src="../img/avatar.png" class="profile-user-img img-fluid img-circle">
+        </div>
+        <div class="text-center">
+            <b>
+                <?php
+                    echo $_SESSION['nombre_us'];
+                ?>
+            </b>
+        </div>
+        <div class="alert alert-danger text-center" id="update" style='display:none;'>
+            <span><i class="fas fa-check m-1"></i>Se cambio password correctamente</span>
+        </div>
+        <div class="alert alert-success text-center" id="noupdate" style='display:none;'>
+            <span><i class="fas fa-times m-1"></i>El password no es correcto</span>
+        </div>
+        <form id="form-pass">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                </div>
+                <input id="oldpass" type="password" class="form-control" placeholder="Ingrese password actual">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-lock-alt"></i></span>
+                </div>
+                <input id=newpass" type="text" class="form-control" placeholder="Ingrese password nueva">
+            </div>
+           
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn bg-gradient-primary">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -37,19 +92,21 @@ if($_SESSION['us_tipo']==1){
                                 <div class="text-center">
                                     <img src="../img/avatar.png" class="profile-user-img img-fluid img-circle">
                                 </div>
-                                <h3 class="profile-username text-center text-success">Nombre</h3>
-                                <p class="text-muted text-center">Apellidos</p>
+                                <input id="id_usuario" type="hidden" value="<?php echo $_SESSION['usuario']?>">
+                                <h3 id="nombre_us" class="profile-username text-center text-success">Nombre</h3>
+                                <p id="apellidos_us" class="text-muted text-center">Apellidos</p>
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <li class="list-group-item">
-                                        <b style="color:#0B7300">Edad</b><a class="float-right">12</a>
+                                        <b style="color:#0B7300">Edad</b><a id="edad" class="float-right">12</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b style="color:#0B7300">CI</b><a class="float-right">12</a>
+                                        <b style="color:#0B7300">CI</b><a id="dni_us" class="float-right">12</a>
                                     </li>
                                     <li class="list-group-item">
                                         <b style="color:#0B7300">Tipo Usuario</b>
-                                        <span class="float-right badge badge-primary">Administrador</span>
+                                        <span id="us_tipo" class="float-right badge badge-primary">Administrador</span>
                                     </li>
+                                    <button data-bs-toggle="modal" data-bs-target="#cambiocontra" type="button" class="btn btn-block btn-outline-warning btn-sm">Cambiar password</button>
                                 </ul>
                             </div>
                         </div>
@@ -61,24 +118,24 @@ if($_SESSION['us_tipo']==1){
                                 <strong style="color:#0B7300">
                                     <i class="fas fa-phone mr-1"></i>Telefono
                                 </strong>
-                                <p class="text-muted">4546454</p>
+                                <p id="telefono_us" class="text-muted">4546454</p>
                                 <strong style="color:#0B7300">
                                     <i class="fas fa-map-marker-alt mr-1"></i>Residencia
                                 </strong>
-                                <p class="text-muted">4546454</p>
+                                <p id="residencia_us" class="text-muted">4546454</p>
                                 <strong style="color:#0B7300">
                                     <i class="fas fa-at mr-1"></i>Correo
                                 </strong>
-                                <p class="text-muted">4546454</p>
+                                <p id="correo_us" class="text-muted">4546454</p>
                                 <strong style="color:#0B7300">
                                     <i class="fas fa-smile-wink mr-1"></i>Genero
                                 </strong>
-                                <p class="text-muted">4546454</p>
+                                <p id="sexo_us" class="text-muted">4546454</p>
                                 <strong style="color:#0B7300">
                                     <i class="fas fa-pencil-alt mr-1"></i>Informacion adicional
                                 </strong>
-                                <p class="text-muted">4546454</p>
-                                <button class="btn btn-block  bg-gradient-danger">Editar</button>
+                                <p id="adicional_us" class="text-muted">4546454</p>
+                                <button class="edit btn btn-block  bg-gradient-danger">Editar</button>
                             </div>
                             <div class="card-footer">
                                 <p class="text-muted">click en boton si desea editar</p>
@@ -91,7 +148,13 @@ if($_SESSION['us_tipo']==1){
                                 <h3 class="card-title">Editar datos personales</h3>
                             </div>
                             <div class="card-body">
-                                <form class="form-horizontal">
+                                <div class="alert alert-danger text-center" id="editado" style='display:none;'>
+                                    <span><i class="fas fa-check m-1"></i>Editado</span>
+                                </div>
+                                <div class="alert alert-success text-center" id="noeditado" style='display:none;'>
+                                    <span><i class="fas fa-times m-1"></i>Edicion deshabilitada</span>
+                                </div>
+                                <form id='form-usuario' class="form-horizontal">
                                     <div class="form-group row">
                                         <label for="telefono" class="col-sm-2 col-form-label">Telefono</label>
                                         <div class="col-sm-10">
@@ -138,10 +201,8 @@ if($_SESSION['us_tipo']==1){
             </div>
         </div>
     </section>
-    <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  
 <?php
 include_once 'layouts/footer.php';
 }
@@ -149,3 +210,4 @@ else{
     header('Location: ../index.php');
 }
 ?>
+<script src="../js/Usuario.js"></script>
