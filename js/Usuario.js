@@ -37,6 +37,11 @@ $(document).ready(function (){
             $('#correo_us').html(correo);
             $('#sexo_us').html(sexo);
             $('#adicional_us').html(adicional);
+
+            $('#avatar2').attr('src',usuario.avatar);
+            $('#avatar1').attr('src',usuario.avatar);
+            $('#avatar3').attr('src',usuario.avatar);
+            $('#avatar4').attr('src',usuario.avatar);
         })
     }
     $(document).on('click','.edit',(e)=>{
@@ -81,46 +86,55 @@ $(document).ready(function (){
         e.preventDefault();
     });
 
-    $(document).ready(function(){
-        // Manejador para el botón de cambiar password
-        $('#btnCambiarPassword').click(function(){
-            $('#cambiocontra').modal('show');
-        });
-    
-        // Asegurarnos que el modal se resetee cuando se cierre
-        $('#cambiocontra').on('hidden.bs.modal', function () {
-            $('#form-pass')[0].reset();
-            $('#update').hide();
-            $('#noupdate').hide();
-        });
-    
-        // El resto de tu código existente...
-        $('#form-pass').submit(function(e){
-            e.preventDefault();
-            let oldpass = $('#oldpass').val();
-            let newpass = $('#newpass').val();
-            funcion = 'cambiar_contra';
+    $('#form-pass').submit(e=>{
+        let oldpass=$('#oldpass').val();
+        let newpass=$('#newpass').val();
+        funcion='cambiar_contra';
+        $post('../controlador/UsuarioController.php',{id_usuario,funcion,oldpass,newpass},(response)=>{
+            if(response=='update'){
+                $('#update').hide('show');
+                $('#update').show(1000);
+                $('#update').hide(2000);
+                $('#form-pass').trigger('reset');
+            }
+            else{
+                $('#noupdate').hide('show');
+                $('#noupdate').show(1000);
+                $('#noupdate').hide(2000);
+                $('#form-pass').trigger('reset');
+            }
+        })
+        e.preventDefault();
+    })
+    $('#form-photo').submit(e=>{
+        let formData = new FormData($('#form-photo')[0]);
+        $.ajax({
+            url:'../controlador/UsuarioController.php',
+            type:'POST',
+            data:formData,
+            cache:false,
+            processData: false,
+            contentType: false
+        }).done(function(response){
+            const json = JSON.parse(response);
+            if(json.alert=='edit'){
+                $('#avatar1').attr('src',json.ruta);
+                $('#edit').hide('show');
+                $('#edit').show(1000);
+                $('#edit').hide(2000);
+                $('#form-photo').trigger('reset');
+                buscar_usuario(id_usuario);
+            }
+            else{
+                $('#noedit').hide('show');
+                $('#noedit').show(1000);
+                $('#noedit').hide(2000);
+                $('#form-photo').trigger('reset');
+            }
             
-            $.post('../controlador/UsuarioController.php',{
-                id_usuario,
-                funcion,
-                oldpass,
-                newpass
-            }, function(response){
-                if(response=='update'){
-                    $('#update').show();
-                    setTimeout(function(){
-                        $('#update').hide();
-                        $('#cambiocontra').modal('hide');
-                    }, 2000);
-                } else {
-                    $('#noupdate').show();
-                    setTimeout(function(){
-                        $('#noupdate').hide();
-                    }, 2000);
-                }
-                $('#form-pass')[0].reset();
-            });
+            
         });
-    });
+        e.preventDefault();
+    })
+    
 })
