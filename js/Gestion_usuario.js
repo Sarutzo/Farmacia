@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    var tipo_usuario = $('#tipo_usuario').val();
     buscar_datos ();
     var funcion;
     function buscar_datos (consulta){
@@ -33,10 +34,33 @@ $(document).ready(function(){
                             </div>
                         </div>
                         <div class="card-footer">
-                            <div class="text-right">
-                                <button class="btn btn-danger">
-                                    <i class="fas fa-window-close mr-1"></i>Eliminar
-                                </button>
+                            <div class="text-right">`;
+                            if(tipo_usuario==3){
+                                if(usuario.tipo_usuario!=3){
+                                    template+=`
+                                    <button class="btn btn-danger mr-1">
+                                        <i class="fas fa-window-close mr-1"></i>Eliminar
+                                    </button>
+                                    `;
+                                }
+                                if(usuario.tipo_usuario==2){
+                                    template+=`
+                                    <button class="btn btn-primary ml-1">
+                                        <i class="fas fa-window-close mr-1"></i>Ascender
+                                    </button>
+                                    `;
+                                }
+                            }
+                            else{
+                                if(tipo_usuario==1 && usuario.tipo_usuario!=1 && usuario.tipo_usuario!=3){
+                                    template+=`
+                                    <button class="btn btn-danger">
+                                        <i class="fas fa-window-close mr-1"></i>Eliminar
+                                    </button>
+                                    `;
+                                }
+                            }
+                                template+=`
                             </div>
                         </div>
                     </div>
