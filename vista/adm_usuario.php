@@ -10,7 +10,51 @@ if($_SESSION['us_tipo']==1||$_SESSION['us_tipo']==3){
     include_once 'layouts/nav.php';
 ?>
     <!-- Button trigger modal -->
-
+    <div class="modal fade" id="confirmar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fs-5" id="exampleModalLabel">Confirmar Accion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+            <img id="avatar3" src="../img/avatar.png" class="profile-user-img img-fluid img-circle">
+        </div>
+        <div class="text-center">
+            <b>
+                <?php
+                    echo $_SESSION['nombre_us'];
+                ?>
+            </b>
+        </div>
+        <span>Necesitamos su password para continuar</span>
+        <div class="alert alert-success text-center" id="confirmado" style='display:none;'>
+            <span><i class="fas fa-check m-1"></i>Se modifico al usuario</span>
+        </div>
+        <div class="alert alert-danger text-center" id="rechazado" style='display:none;'>
+            <span><i class="fas fa-times m-1"></i>El password no es correcto</span>
+        </div>
+        <form id="form-confirmar" enctype="multipart/form-data">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                </div>
+                <input id="oldpass" type="password" class="form-control" placeholder="Ingrese password actual">
+                <input type="hidden" id="id_user">
+                <input type="hidden" id="funcion">
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn bg-gradient-primary">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="modal fade" id="crearusuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -22,6 +66,12 @@ if($_SESSION['us_tipo']==1||$_SESSION['us_tipo']==3){
           </button>
         </div>
         <div class="card-body">
+        <div class="alert alert-success text-center" id="add" style='display:none;'>
+            <span><i class="fas fa-check m-1"></i>Se agrego correctamente</span>
+        </div>
+        <div class="alert alert-danger text-center" id="noadd" style='display:none;'>
+            <span><i class="fas fa-times m-1"></i>El CI ya existe</span>
+        </div>
           <form id="form-crear">
             <div class="form-group">
               <label for="nombre">Nombres</label>
@@ -46,7 +96,7 @@ if($_SESSION['us_tipo']==1||$_SESSION['us_tipo']==3){
           
         </div>
         <div class="card-footer">
-          <button type="sutmit" class="btn bg-gradient-primary float-right m-1">Guardar</button>
+          <button type="submit" class="btn bg-gradient-primary float-right m-1">Guardar</button>
           <button type="button" data-dismiss="modal" class="btn btn-outline-secondary float-right m-1">Cerrar</button>
           </form>
         </div>
@@ -61,12 +111,12 @@ if($_SESSION['us_tipo']==1||$_SESSION['us_tipo']==3){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Gestion usuarios <button type="button" data-toggle="modal" data-target="#crearusuario" class="btn bg-gradient-primary ml-2">Crear usuario</button></h1>
+            <h1>Gestion usuarios <button id="button-crear" type="button" data-toggle="modal" data-target="#crearusuario" class="btn bg-gradient-primary ml-2">Crear usuario</button></h1>
               <input type="hidden" id="tipo_usuario" value="<?php echo $_SESSION['us_tipo']?>">
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="adm_catalogo">Inicio</a></li>
+              <li class="breadcrumb-item"><a href="../vista/adm_catalogo.php">Inicio</a></li>
               <li class="breadcrumb-item active">Gestion usuarios</li>
             </ol>
           </div>

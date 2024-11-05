@@ -33,10 +33,10 @@ if($_SESSION['us_tipo']==1||$_SESSION['us_tipo']==3){
                 ?>
             </b>
         </div>
-        <div class="alert alert-danger text-center" id="update" style='display:none;'>
+        <div class="alert alert-success text-center" id="update" style='display:none;'>
             <span><i class="fas fa-check m-1"></i>Se cambio password correctamente</span>
         </div>
-        <div class="alert alert-success text-center" id="noupdate" style='display:none;'>
+        <div class="alert alert-danger text-center" id="noupdate" style='display:none;'>
             <span><i class="fas fa-times m-1"></i>El password no es correcto</span>
         </div>
         <form id="form-pass" enctype="multipart/form-data">
@@ -81,10 +81,10 @@ if($_SESSION['us_tipo']==1||$_SESSION['us_tipo']==3){
                 ?>
             </b>
         </div>
-        <div class="alert alert-danger text-center" id="edit" style='display:none;'>
+        <div class="alert alert-success text-center" id="edit" style='display:none;'>
             <span><i class="fas fa-check m-1"></i>Se cambio el avatar</span>
         </div>
-        <div class="alert alert-success text-center" id="noedit" style='display:none;'>
+        <div class="alert alert-danger text-center" id="noedit" style='display:none;'>
             <span><i class="fas fa-times m-1"></i>formato no soportado</span>
         </div>
         <form id="form-photo" enctype="multipart/form-data">
